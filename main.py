@@ -1,9 +1,42 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter.filedialog import askopenfilename
+from tkinter.filedialog import askopenfilename, asksaveasfilename
 from PIL import Image, ImageTk, ImageDraw, ImageFont
-from io import BytesIO
-import requests
+
+class App(Tk):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.title('Water-Markup')
+        self.frm = Frame(self)
+        self.frm.grid(padx=20, pady=20)
+        self.create_widgets()
+
+    def show_image(self, image):
+        img_photoimage = ImageTk.PhotoImage(image)
+        self.panel = Label(self, image=img_photoimage)
+        self.panel.photo = img_photoimage
+        self.panel.grid(column=2, row=2)
+
+
+    def get_image(self):
+        path = askopenfilename(filetypes=[('Image File', ('.jpg', 'jpeg', '.png'))])
+
+        self.image = Image.open(path)
+
+        self.show_image(self.image)
+
+    def save_image(self):
+        filename = asksaveasfilename(defaultextension='.png')
+        if filename:
+            self.photo_saveable.save(filename)
+
+
+    def create_watermark(self):
+        draw = ImageDraw.Draw(self.image)
+        font = ImageFont.truetype("arial.ttf", 36)
+        text = self.watermark_entry.get()
+
+        text_size = draw.textsize(text, font)
 
 class App(Tk):
     def __init__(self, *args, **kwargs):
@@ -59,20 +92,20 @@ if __name__ == '__main__':
     app = App()
     app.mainloop()
 
-# root = Tk()
-# frm = Frame(root).grid()
+# # root = Tk()
+# # frm = Frame(root).grid()
 
-# base_url_label = ttk.Label(frm, text='Copy and paste the image url for the base image here:').grid(row=1, column=0)
-# base_url_entry = ttk.Entry(frm)
-# base_url_entry.grid(row=1, column=1)
+# # base_url_label = ttk.Label(frm, text='Copy and paste the image url for the base image here:').grid(row=1, column=0)
+# # base_url_entry = ttk.Entry(frm)
+# # base_url_entry.grid(row=1, column=1)
 
-# wm_url_label = ttk.Label(frm, text='Copy and paste the image url for the watermark image here (make sure the background is transparent):').grid(row=2, column=0)
-# wm_url_entry = ttk.Entry(frm)
-# wm_url_entry.grid(row=2, column=1)
+# # wm_url_label = ttk.Label(frm, text='Copy and paste the image url for the watermark image here (make sure the background is transparent):').grid(row=2, column=0)
+# # wm_url_entry = ttk.Entry(frm)
+# # wm_url_entry.grid(row=2, column=1)
 
-# def combine_images():
-#     base_url = base_url_entry.get()
-#     wm_url = wm_url_entry.get()
+# # def combine_images():
+# #     base_url = base_url_entry.get()
+# #     wm_url = wm_url_entry.get()
 
 #     response_base = requests.get(url=base_url)
 #     response_wm = requests.get(url=wm_url)
@@ -91,7 +124,7 @@ if __name__ == '__main__':
 #     combined_image.paste(img_base, (0, 0))
 #     combined_image.paste(img_wm, (200, 150))
 
-#     combined_image.convert
+# #     combined_image.convert
 
 #     final_image = ImageTk.PhotoImage(combined_image)
 #     img_label = Label(frm, image=final_image).grid(row=0, column=0)
@@ -101,4 +134,4 @@ if __name__ == '__main__':
 # combine_button = ttk.Button(frm, text="Display Watermarked Image", command=combine_images).grid(row=3, column=1, pady=15)
 
 
-# root.mainloop()
+# # root.mainloop()
