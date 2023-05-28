@@ -1,15 +1,17 @@
 from tkinter import *
 from tkinter import ttk
-from tkinter.filedialog import askopenfilename, asksaveasfilename
+from tkinter.filedialog import askopenfilename
 from PIL import Image, ImageTk, ImageDraw, ImageFont
+from io import BytesIO
+import requests
 
-class App(Tk):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.title('Water-Markup')
-        self.frm = Frame(self)
-        self.frm.grid(padx=20, pady=20)
-        self.create_widgets()
+# class App(Tk):
+#     def __init__(self, *args, **kwargs):
+#         super().__init__(*args, **kwargs)
+#         self.title('Water-Markup')
+#         self.frm = Frame(self)
+#         self.frm.grid(padx=20, pady=20)
+#         self.create_widgets()
 
     def show_image(self, image):
         img_photoimage = ImageTk.PhotoImage(image)
