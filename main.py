@@ -1,9 +1,6 @@
 from tkinter import *
-from tkinter import ttk
 from tkinter.filedialog import askopenfilename, asksaveasfilename
 from PIL import Image, ImageTk, ImageDraw, ImageFont
-from io import BytesIO
-import requests
 
 class App(Tk):
     def __init__(self, *args, **kwargs):
